@@ -22,6 +22,7 @@ import { HealthModule } from './routes/health/health.module';
 import { OwnersModule } from './routes/owners/owners.module';
 import { AboutModule } from './routes/about/about.module';
 import { TransactionsModule } from './routes/transactions/transactions.module';
+import { SafesModule } from './routes/safes/safes.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { TransactionsModule } from './routes/transactions/transactions.module';
     OwnersModule,
     SafeAppsModule,
     TransactionsModule,
+    SafesModule,
     // common
     CacheModule,
     ConfigurationModule,
