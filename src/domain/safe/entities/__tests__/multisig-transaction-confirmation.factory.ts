@@ -1,4 +1,3 @@
-import { Confirmation } from '../multisig-transaction.entity';
 import { faker } from '@faker-js/faker';
 
 export default function (
@@ -7,13 +6,14 @@ export default function (
   signatureType?: string,
   submissionDate?: Date,
   transactionHash?: string,
-): Confirmation {
-  return <Confirmation>{
+): unknown {
+  return {
     owner: owner ?? faker.finance.ethereumAddress(),
     signature:
       signature === undefined ? faker.datatype.hexadecimal() : signature,
     signatureType: signatureType ?? faker.datatype.string(),
-    submissionDate: submissionDate ?? faker.date.recent(),
+    submissionDate:
+      submissionDate?.toISOString() ?? faker.date.recent().toISOString(),
     transactionHash:
       transactionHash === undefined
         ? faker.datatype.hexadecimal()

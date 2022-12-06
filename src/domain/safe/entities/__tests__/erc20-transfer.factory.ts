@@ -1,4 +1,3 @@
-import { ERC20Transfer } from '../transfer.entity';
 import { faker } from '@faker-js/faker';
 
 export default function (
@@ -9,10 +8,11 @@ export default function (
   transactionHash?: string,
   tokenAddress?: string | null,
   value?: string,
-): ERC20Transfer {
-  return <ERC20Transfer>{
+): unknown {
+  return {
+    type: 'ERC20_TRANSFER',
     blockNumber: blockNumber ?? faker.datatype.number({ min: 0 }),
-    executionDate: executionDate ?? faker.date.recent(),
+    executionDate: executionDate ?? faker.date.recent().toISOString(),
     from: from ?? faker.finance.ethereumAddress(),
     to: to ?? faker.finance.ethereumAddress(),
     transactionHash: transactionHash ?? faker.datatype.hexadecimal(),
