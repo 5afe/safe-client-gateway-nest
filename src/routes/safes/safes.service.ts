@@ -96,7 +96,7 @@ export class SafesService {
     );
   }
 
-  private toUnixTimestampInSecondsOrNow(date: Date | undefined): number {
+  private toUnixTimestampInSecondsOrNow(date: Date | null): number {
     const dateValue = date ? date.valueOf() : Date.now();
     return Math.floor(dateValue / 1000);
   }
@@ -104,7 +104,7 @@ export class SafesService {
   private async getCollectiblesTag(
     chainId: string,
     safeAddress: string,
-  ): Promise<Date | undefined> {
+  ): Promise<Date | null> {
     const lastCollectibleTransfer =
       await this.safeRepository.getCollectibleTransfers(
         chainId,
@@ -119,7 +119,7 @@ export class SafesService {
   private async getQueuedTransactionTag(
     chainId: string,
     safeAddress: string,
-  ): Promise<Date | undefined> {
+  ): Promise<Date | null> {
     const lastQueuedTransaction =
       await this.safeRepository.getQueuedTransactions(chainId, safeAddress, 1);
 
@@ -129,7 +129,7 @@ export class SafesService {
   private async executedTransactionTag(
     chainId: string,
     safeAddress: string,
-  ): Promise<Date | undefined> {
+  ): Promise<Date | null> {
     const lastExecutedTransaction = (
       await this.safeRepository.getExecutedTransactions(chainId, safeAddress)
     ).results[0];
@@ -144,6 +144,7 @@ export class SafesService {
     } else if (isModuleTransaction(lastExecutedTransaction)) {
       return lastExecutedTransaction.executionDate;
     }
+    return null;
   }
 
   private computeVersionState(

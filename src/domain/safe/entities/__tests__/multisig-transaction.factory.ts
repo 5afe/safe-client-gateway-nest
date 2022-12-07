@@ -13,7 +13,7 @@ export class MultisigTransactionBuilder
   private baseGas: number = faker.datatype.number();
   private blockNumber: number = faker.datatype.number();
   private confirmations: Confirmation[] | null = [
-    multisigTransactionConfirmationFactory(),
+    multisigTransactionConfirmationFactory() as Confirmation,
   ];
   private confirmationsRequired: number = faker.datatype.number();
   private data: string = faker.datatype.hexadecimal();
