@@ -1,25 +1,60 @@
 import { ERC721Transfer } from '../transfer.entity';
 import { faker } from '@faker-js/faker';
+import { Builder } from '../../../common/__tests__/builder';
 
-export default function (
-  blockNumber?: number,
-  executionDate?: Date,
-  from?: string,
-  to?: string,
-  transactionHash?: string,
-  tokenAddress?: string | null,
-  tokenId?: string,
-): ERC721Transfer {
-  return <ERC721Transfer>{
-    blockNumber: blockNumber ?? faker.datatype.number({ min: 0 }),
-    executionDate: executionDate ?? faker.date.recent(),
-    from: from ?? faker.finance.ethereumAddress(),
-    to: to ?? faker.finance.ethereumAddress(),
-    transactionHash: transactionHash ?? faker.datatype.hexadecimal(),
-    tokenAddress:
-      tokenAddress === undefined
-        ? faker.finance.ethereumAddress()
-        : tokenAddress,
-    tokenId: tokenId ?? faker.datatype.string(),
-  };
+export class ERC721TransferTransferBuilder implements Builder<ERC721Transfer> {
+  blockNumber: number = faker.datatype.number();
+  executionDate: Date = faker.date.recent();
+  from: string = faker.finance.ethereumAddress();
+  to: string = faker.finance.ethereumAddress();
+  transactionHash: string = faker.datatype.hexadecimal();
+  tokenAddress: string | null = faker.finance.ethereumAddress();
+  tokenId: string = faker.datatype.string();
+
+  withBlockNumber(blockNumber: number) {
+    this.blockNumber = blockNumber;
+    return this;
+  }
+
+  withExecutionDate(executionDate: Date) {
+    this.executionDate = executionDate;
+    return this;
+  }
+
+  withFrom(from: string) {
+    this.from = from;
+    return this;
+  }
+
+  withTo(to: string) {
+    this.to = to;
+    return this;
+  }
+
+  withTransactionHash(transactionHash: string) {
+    this.transactionHash = transactionHash;
+    return this;
+  }
+
+  withTokenAddress(tokenAddress: string | null) {
+    this.tokenAddress = tokenAddress;
+    return this;
+  }
+
+  withTokenId(tokenId: string) {
+    this.tokenId = tokenId;
+    return this;
+  }
+
+  build(): ERC721Transfer {
+    return <ERC721Transfer>{
+      blockNumber: this.blockNumber,
+      executionDate: this.executionDate,
+      from: this.from,
+      to: this.to,
+      transactionHash: this.transactionHash,
+      tokenAddress: this.tokenAddress,
+      tokenId: this.tokenId,
+    };
+  }
 }
