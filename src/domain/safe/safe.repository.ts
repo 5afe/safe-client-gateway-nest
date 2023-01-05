@@ -108,9 +108,40 @@ export class SafeRepository implements ISafeRepository {
     return page;
   }
 
-  async getTransactionQueue(
+  async getTransactionQueueByModified(
     chainId: string,
     safeAddress: string,
+    limit?: number,
+    offset?: number,
+  ): Promise<Page<MultisigTransaction>> {
+    return this.getTransactionQueue(
+      chainId,
+      safeAddress,
+      '-modified',
+      limit,
+      offset,
+    );
+  }
+
+  async getTransactionQueueByNonce(
+    chainId: string,
+    safeAddress: string,
+    limit?: number,
+    offset?: number,
+  ): Promise<Page<MultisigTransaction>> {
+    return this.getTransactionQueue(
+      chainId,
+      safeAddress,
+      'nonce',
+      limit,
+      offset,
+    );
+  }
+
+  private async getTransactionQueue(
+    chainId: string,
+    safeAddress: string,
+    ordering: string,
     limit?: number,
     offset?: number,
   ): Promise<Page<MultisigTransaction>> {
@@ -119,7 +150,7 @@ export class SafeRepository implements ISafeRepository {
     const page: Page<MultisigTransaction> =
       await transactionService.getMultisigTransactions(
         safeAddress,
-        '-modified',
+        ordering,
         false,
         true,
         undefined,

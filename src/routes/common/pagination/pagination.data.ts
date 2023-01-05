@@ -3,7 +3,7 @@ const QUERY_PARAM_LIMIT = 'limit';
 const QUERY_PARAM_OFFSET = 'offset';
 
 export class PaginationData {
-  private constructor(readonly limit?: number, readonly offset?: number) {}
+  constructor(readonly limit?: number, readonly offset?: number) {}
 
   /**
    * Extracts {@link PaginationData} from {@link url}. The url
